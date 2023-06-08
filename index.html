@@ -40,6 +40,13 @@
             display: none;
         }
 
+        .user-count {
+            position: absolute;
+            bottom: -25px;
+            right: 25px;
+            color: #1a1919;
+        }
+
         .username-container:hover .btn-copy {
             display: block;
         }
@@ -66,6 +73,7 @@
                 <div class="username-container">
                     <div id="usernames" class="form-control" draggable="false"></div>
                     <span id="btn-copy" class="btn-copy" draggable="false">Copy</span>
+                    <span id="user-count" class="user-count" draggable="false"></span>
                 </div>
             </div>
 
@@ -92,6 +100,7 @@
 
             // Show the usernames in the "Usernames" box, replace "," with "<br>" for newlines.
             $("#usernames").html(usernames.join(",<br>"));
+            $("#user-count").text("Users: " + usernames.length); // <-- set user count
         });
 
         $("#btn-copy").click(function () {
