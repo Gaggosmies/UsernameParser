@@ -16,23 +16,28 @@
             padding: 2rem 0;
         }
 
-        .form-control {
+        h3 {
+            user-select: none;
+        }
+
+
+        .form-control,
+        textarea.form-control {
             height: 100%;
             resize: none;
             overflow: auto;
         }
 
-        .btn-copy:hover {
-            cursor: pointer;
-        }
-
-        .btn-copy::after {
-            content: "Copy";
+        .btn-copy {
+            position: absolute;
+            bottom: -25px;
+            left: 25px;
+            color: blue;
             display: none;
         }
 
-        .btn-copy:hover::after {
-            display: inline;
+        #usernames:hover .btn-copy {
+            display: block;
         }
     </style>
 </head>
@@ -50,8 +55,8 @@
             </div>
             <div class="col-md-4">
                 <h3>Usernames</h3>
-                <div id="usernames" class="form-control">
-                    <span id="btn-copy" class="btn-copy"></span>
+                <div id="usernames" class="form-control" draggable="false">
+                    <span id="btn-copy" class="btn-copy" draggable="false">Copy</span>
                 </div>
             </div>
         </div>
@@ -76,15 +81,16 @@
             }
 
             // Show the usernames in the "Usernames" box
-            $("#usernames").text(usernames.join("\n"));
+            $("#usernames").text(usernames.join(",\n"));
         });
 
         $("#btn-copy").click(function () {
-            let $temp = $("<input>");
+            let $temp = $("<textarea>");
             $("body").append($temp);
-            $temp.val($("#usernames").text()).select();
+            $temp.val($("#usernames").clone().text()).select();
             document.execCommand("copy");
             $temp.remove();
+            alert("Usernames copied!");
         });
     </script>
 </body>
