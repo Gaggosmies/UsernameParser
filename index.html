@@ -28,6 +28,10 @@
             overflow: auto;
         }
 
+        .col-md-4 {
+            position: relative;
+        }
+
         .btn-copy {
             position: absolute;
             bottom: -25px;
@@ -36,8 +40,12 @@
             display: none;
         }
 
-        #usernames:hover .btn-copy {
+        .username-container:hover .btn-copy {
             display: block;
+        }
+
+        .username-container {
+            height: 100%;
         }
     </style>
 </head>
@@ -55,10 +63,12 @@
             </div>
             <div class="col-md-4">
                 <h3>Usernames</h3>
-                <div id="usernames" class="form-control" draggable="false">
+                <div class="username-container">
+                    <div id="usernames" class="form-control" draggable="false"></div>
                     <span id="btn-copy" class="btn-copy" draggable="false">Copy</span>
                 </div>
             </div>
+
         </div>
         <button id="btn-parse" class="btn btn-dark btn-lg btn-block mt-5">Parse</button>
     </div>
