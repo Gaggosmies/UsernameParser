@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Username Parser</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #1a1919;
+            color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            height: 60vh;
+            padding: 2rem 0;
+        }
+
+        .form-control {
+            height: 100%;
+            resize: none;
+            overflow: auto;
+        }
+
+        .btn-copy:hover {
+            cursor: pointer;
+        }
+
+        .btn-copy::after {
+            content: "Copy";
+            display: none;
+        }
+
+        .btn-copy:hover::after {
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row h-100">
+            <div class="col-md-4">
+                <h3>Raw Data</h3>
+                <textarea id="rawData" class="form-control"></textarea>
+            </div>
+            <div class="col-md-4">
+                <h3>Likes</h3>
+                <textarea id="likes" class="form-control"></textarea>
+            </div>
+            <div class="col-md-4">
+                <h3>Usernames</h3>
+                <div id="usernames" class="form-control">
+                    <span id="btn-copy" class="btn-copy"></span>
+                </div>
+            </div>
+        </div>
+        <button id="btn-parse" class="btn btn-dark btn-lg btn-block mt-5">Parse</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $("#btn-parse").click(function () {
+            let rawData = $("#rawData").val().match(/@\w+/g) || [];
+            let likes = $("#likes").val().match(/@\w+/g) || [];
+            let rawSet = new Set(rawData);
+            let likesSet = new Set(likes);
+            let usernames;
+
+            // If "Likes" box is not empty, find the intersection. Otherwise, use raw data.
+            if ($("#likes").val() != "") {
+                usernames = [...rawSet].filter(x => likesSet.has(x));
+            } else {
+                usernames = [...rawSet];
+            }
+
+            // Show the usernames in the "Usernames" box
+            $("#usernames").text(usernames.join("\n"));
+        });
+
+        $("#btn-copy").click(function () {
+            let $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($("#usernames").text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+        });
+    </script>
+</body>
+
+</html>
