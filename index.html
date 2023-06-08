@@ -71,7 +71,7 @@
             <div class="col-md-4">
                 <h3>Usernames</h3>
                 <div class="username-container">
-                    <div id="usernames" class="form-control" draggable="false"></div>
+                    <span id="usernames" class="form-control" draggable="false"></span>
                     <span id="btn-copy" class="btn-copy" draggable="false">Copy</span>
                     <span id="user-count" class="user-count" draggable="false"></span>
                 </div>
@@ -99,14 +99,14 @@
             }
 
             // Show the usernames in the "Usernames" box, replace "," with "<br>" for newlines.
-            $("#usernames").html(usernames.join(",<br>"));
+            $("#usernames").html(usernames.join("\n"));
             $("#user-count").text("Users: " + usernames.length); // <-- set user count
         });
 
         $("#btn-copy").click(function () {
             let $temp = $("<textarea>");
             $("body").append($temp);
-            $temp.val($("#usernames").html().replace(/<br>/g, "\n")).select();
+            $temp.val($("#usernames").text()).select(); // No need to replace <br> with \n
             document.execCommand("copy");
             $temp.remove();
             alert("Usernames copied!");
